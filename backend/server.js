@@ -273,4 +273,9 @@ app.use((req, res) => {
   res.status(404).send('Page not found');
 });
 
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+// For Vercel Serverless Function compatibility, only listen if run directly
+if (require.main === module) {
+  app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+}
+
+module.exports = app;
