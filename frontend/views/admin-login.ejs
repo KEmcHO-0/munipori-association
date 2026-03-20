@@ -1,39 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - MSWA</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <style>
-        body { display: flex; align-items: center; justify-content: center; height: 100vh; background-color: #f1f5f9; margin: 0; }
-        .login-box { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
-        .login-box h2 { margin-top: 0; color: #1e3a8a; text-align: center; }
-        .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; color: #475569; }
-        .form-group input { width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 4px; font-family: 'Inter', sans-serif; }
-        .btn-block { width: 100%; display: block; text-align: center; margin-top: 1rem; }
-        .error-message { color: #dc2626; text-align: center; margin-bottom: 1rem; font-size: 0.875rem; }
-    </style>
-</head>
-<body>
-    <div class="login-box">
-        <h2>Admin Login</h2>
-        <% if (error) { %>
-            <div class="error-message"><%= error %></div>
-        <% } %>
-        <form action="/admin/login" method="POST">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn primary btn-block">Log In</button>
-        </form>
-    </div>
-</body>
-</html>
+<%- include('partials/header', { title: 'Admin Login', currentPath: '/admin/login' }) %>
+
+<main class="container" style="padding-top: 4rem; padding-bottom: 4rem; max-width: 500px; margin: 0 auto;">
+  <div style="background: var(--bg-alt); padding: 3rem; border-radius: var(--radius); border: 1px solid var(--border);">
+    <h1 style="text-align: center; margin-bottom: 2rem; font-size: 2rem; color: var(--text);">Admin Login</h1>
+    
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div style="background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; text-align: center; font-weight: 500; border: 1px solid rgba(239, 68, 68, 0.2);">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <form action="/admin/login" method="POST" style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+        <label for="username" style="font-weight: 500; color: var(--text-muted); font-size: 0.95rem;">Username</label>
+        <div style="position: relative;">
+          <i data-lucide="user" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--accent); width: 18px; height: 18px;"></i>
+          <input type="text" id="username" name="username" required 
+                 style="width: 100%; padding: 0.875rem 1rem 0.875rem 2.875rem; border: 1px solid var(--border); border-radius: 0.5rem; background: var(--bg); color: var(--text); outline: none; transition: border-color 0.2s;">
+        </div>
+      </div>
+      
+      <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+        <label for="password" style="font-weight: 500; color: var(--text-muted); font-size: 0.95rem;">Password</label>
+        <div style="position: relative;">
+          <i data-lucide="lock" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--accent); width: 18px; height: 18px;"></i>
+          <input type="password" id="password" name="password" required 
+                 style="width: 100%; padding: 0.875rem 1rem 0.875rem 2.875rem; border: 1px solid var(--border); border-radius: 0.5rem; background: var(--bg); color: var(--text); outline: none; transition: border-color 0.2s;">
+        </div>
+      </div>
+      
+      <button type="submit" class="btn" style="width: 100%; margin-top: 0.5rem; padding: 1rem; display: flex; justify-content: center; align-items: center; gap: 0.5rem; font-size: 1rem;">
+        <span>Login to Dashboard</span>
+        <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+      </button>
+    </form>
+  </div>
+</main>
+
+<style>
+  input:focus {
+    border-color: var(--accent) !important;
+  }
+</style>
+
+<%- include('partials/footer') %>

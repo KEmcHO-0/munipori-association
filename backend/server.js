@@ -258,7 +258,6 @@ app.get('/events', async (req, res) => {
   const past = events.filter(e => e.isPast);
   res.render('events', { upcoming, past });
 });
-app.get('/members', (req, res) => res.render('members'));
 app.get('/gallery', async (req, res) => {
   const gallery = await readGallery();
   res.render('gallery', { gallery });

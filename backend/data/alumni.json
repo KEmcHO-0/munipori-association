@@ -1,8 +1,30 @@
 [
-  { "id": 1, "name": "Dr. Rina Sinha", "batch": "2015", "profession": "Neurologist at City Hospital", "image": "https://ui-avatars.com/api/?name=Rina+Sinha&background=random" },
-  { "id": 2, "name": "Rajib Sharma", "batch": "2018", "profession": "Software Engineer at Google", "image": "https://ui-avatars.com/api/?name=Rajib+Sharma&background=random" },
-  { "id": 3, "name": "Anita Devi", "batch": "2012", "profession": "Principal at Sunrise Academy", "image": "https://ui-avatars.com/api/?name=Anita+Devi&background=random" },
-  { "id": 4, "name": "Bikash Singha", "batch": "2019", "profession": "Civil Engineer", "image": "https://ui-avatars.com/api/?name=Bikash+Singha&background=random" },
-  { "id": 5, "name": "Sonia Monipuri", "batch": "2016", "profession": "Financial Analyst", "image": "https://ui-avatars.com/api/?name=Sonia+Monipuri&background=random" },
-  { "id": 6, "name": "Kamal Hassan", "batch": "2014", "profession": "Entrepreneur", "image": "https://ui-avatars.com/api/?name=Kamal+Hassan&background=random" }
+  {
+    "id": 1773981971890,
+    "name": "Jayed Hasan",
+    "batch": "2010",
+    "profession": "Police",
+    "image": "/uploads/1773981971877-480374547.jpg"
+  },
+  {
+    "id": 1773982102587,
+    "name": "Dr. Tarana Jebin",
+    "batch": "2010",
+    "profession": "Doctor",
+    "image": "/uploads/1773982102584-411539743.jpg"
+  },
+  {
+    "id": 1773982139083,
+    "name": "Dr. Nazrul Islam",
+    "batch": "2011",
+    "profession": "Doctor",
+    "image": "/uploads/1773982139078-93364241.jpg"
+  },
+  {
+    "id": 1773982170816,
+    "name": "Kamal Uddin",
+    "batch": "2000",
+    "profession": "Teacher",
+    "image": "/uploads/1773982170813-68361215.jpg"
+  }
 ]
