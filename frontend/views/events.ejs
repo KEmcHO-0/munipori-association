@@ -1,0 +1,54 @@
+<%- include('partials/header', { title: 'Events', currentPath: '/events' }) %>
+
+<main class="container" style="padding-top: 4rem;">
+  <h1 data-aos="fade-right">Upcoming & Past Events</h1>
+
+  <section data-aos="fade-up">
+    <h2>Upcoming Events</h2>
+    <div class="event-list">
+      <% if(upcoming && upcoming.length > 0) { %>
+        <% upcoming.forEach(event => { %>
+          <div class="event">
+            <div>
+              <strong><%= event.title %></strong>
+              <div class="muted">
+                <i data-lucide="calendar" style="width:16px; margin-right:4px; vertical-align:middle;"></i> <%= event.date %> <%- event.time ? '— ' + event.time : '' %> <br> 
+                <i data-lucide="map-pin" style="width:16px; margin-right:4px; vertical-align:middle;"></i> <%= event.location %>
+              </div>
+              <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #475569;"><%= event.description %></p>
+              <% if (event.attachment) { %>
+                <div style="margin-top: 0.5rem;">
+                  <a href="<%= event.attachment %>" target="_blank" class="btn outline" style="padding: 0.3rem 0.6rem; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.25rem;">
+                    <i data-lucide="paperclip" style="width: 14px; height: 14px;"></i> View Attachment
+                  </a>
+                </div>
+              <% } %>
+            </div>
+            <a class="btn primary" href="#">RSVP Now</a>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p class="muted">Currently no upcoming events.</p>
+      <% } %>
+    </div>
+  </section>
+
+  <section data-aos="fade-up">
+    <h2>Past Events Archive</h2>
+    <div class="cards" style="margin-top:2rem;">
+      <% if(past && past.length > 0) { %>
+        <% past.forEach(event => { %>
+          <article class="card">
+            <h3><%= event.title %></h3>
+            <p class="muted"><%= event.description %></p>
+            <span style="font-size:0.85rem; padding:4px 8px; background:#f1f5f9; border-radius:4px;"><%= event.date %></span>
+          </article>
+        <% }) %>
+      <% } else { %>
+        <p class="muted">No past events found.</p>
+      <% } %>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>

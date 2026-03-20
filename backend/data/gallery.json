@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Annual Genneral Meeting 2025",
+    "image": "https://images.unsplash.com/photo-1528605248644-14dd04022da1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": 2,
+    "title": "Cultural Dance Performance",
+    "image": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": 3,
+    "title": "Community Outreach Initiative",
+    "image": "https://images.unsplash.com/photo-1593113544332-9011afad926d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": 4,
+    "title": "Monipuri Food Festival",
+    "image": "https://images.unsplash.com/photo-1504609774528-69473fb2ff05?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": 5,
+    "title": "Scholarship Distribution 2024",
+    "image": "https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": 6,
+    "title": "Sports Day Tournament",
+    "image": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+  }
+]

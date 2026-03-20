@@ -1,0 +1,25 @@
+<%- include('partials/header', { title: 'Alumni', currentPath: '/alumni' }) %>
+
+<main class="container" style="padding-top: 4rem;">
+  <h1 data-aos="fade-right">Our Proud Alumni</h1>
+  <p data-aos="fade-up" class="muted" style="max-width: 600px; margin-bottom: 2rem;">
+    Meet some of our distinguished former students. Our alumni network stretches across various professional fields and continues to support the growth of the Monipuri community.
+  </p>
+
+  <div class="cards" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;" data-aos="fade-up">
+    <% if(alumniList && alumniList.length > 0) { %>
+      <% alumniList.forEach(alumni => { %>
+        <div class="card" style="text-align: center; padding: 2rem 1.5rem;">
+          <img src="<%= alumni.image %>" alt="<%= alumni.name %>" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; border: 4px solid #f1f5f9;">
+          <h3 style="margin-bottom: 0.25rem; color: var(--primary);"><%= alumni.name %></h3>
+          <p style="margin-bottom: 0.5rem; font-weight: 500;">Batch of <%= alumni.batch %></p>
+          <p class="muted" style="font-size: 0.9rem;"><%= alumni.profession %></p>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p class="muted">No alumni data available.</p>
+    <% } %>
+  </div>
+</main>
+
+<%- include('partials/footer') %>

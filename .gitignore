@@ -1,0 +1,8 @@
+node_modules/
+backend/node_modules/
+.DS_Store
+frontend/public/uploads/
+backend/data/*.json
+!backend/data/events.json
+!backend/data/gallery.json
+!backend/data/alumni.json
