@@ -1,279 +1,227 @@
-// Simple Express server to handle forms and serve EJS pages
+// Express server configured for MongoDB Atlas and Cloudinary
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const fs = require('fs').promises;
 const path = require('path');
 const session = require('express-session');
+const mongoose = require('mongoose');
 const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Setup multer for file uploads
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    const uploadDir = path.join(__dirname, '../frontend/public/uploads');
-    require('fs').mkdirSync(uploadDir, { recursive: true });
-    cb(null, uploadDir);
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
-  }
-});
-const upload = multer({ storage: storage });
-
-// Setup session
-app.use(session({
-  secret: 'munipuri-secret-key-1234',
-  resave: false,
-  saveUninitialized: true,
-}));
-
-// Setup EJS for rendering pages
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '../frontend/views'));
-
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Serve frontend assets from /frontend/public
-app.use(express.static(path.join(__dirname, '../frontend/public')));
-
-// Utility to append to JSON file (creates file if missing)
-async function appendToFile(filePath, obj) {
-  try {
-    await fs.mkdir(path.dirname(filePath), { recursive: true });
-    let data = [];
-    try {
-      const raw = await fs.readFile(filePath, 'utf8');
-      data = JSON.parse(raw || '[]');
-    } catch (err) {
-      data = [];
-    }
-    data.push(obj);
-    await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
-  } catch (err) {
-    console.error('Error writing file', err);
-  }
+// Connect to MongoDB
+if (process.env.MONGO_URI) {
+  mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('Connected to MongoDB Atlas'))
+    .catch(err => console.error('MongoDB connection error:', err));
 }
 
-// Read events file
-async function readEvents() {
-  const filePath = path.join(__dirname, 'data', 'events.json');
-  try {
-    const raw = await fs.readFile(filePath, 'utf8');
-    return JSON.parse(raw || '[]');
-  } catch (err) {
-    return [];
-  }
-}
+// Define Mongoose Models
+const EventSchema = new mongoose.Schema({
+  title: String,
+  date: String,
+  time: String,
+  location: String,
+  description: String,
+  attachment: String,
+  isPast: { type: Boolean, default: false },
+  createdAt: { type: Date,// Express server config
+crequire('dotenv').config();
+const express = require('expressllconst express = require('echconst bodyParser = require('body-priconst cors = require('cors');
+const path atconst path = require('path')moconst session = require('experconst mongoose = require('mongoose');
+consseconst multer = require('multer');
+cotrconst cloudinary = require('clougeconst { CloudinaryStorage } = require('multt:
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Write events file
-async function writeEvents(events) {
-  const filePath = path.join(__dirname, 'data', 'events.json');
-  try {
-    await fs.mkdir(path.dirname(filePath), { recursive: true });
-    await fs.writeFile(filePath, JSON.stringify(events, null, 2), 'utf8');
-  } catch (err) {
-    console.error('Error writing events file', err);
-  }
-}
+//ma)const PORT = process.in
+// Connect to MongoDB
+if (process.en prif (process.env.MONG_C  mongoose.connect(process.ss.env.CLOUDINARY_API_KEY,
+  api_secret: pro    .catch(err => console.error('MongoDB connection errorlo}
 
-// Read alumni file
-async function readAlumni() {
-  const filePath = path.join(__dirname, 'data', 'alumni.json');
-  try {
-    const raw = await fs.readFile(filePath, 'utf8');
-    return JSON.parse(raw || '[]');
-  } catch (err) {
-    return [];
-  }
-}
+// Define Mongoose Models
+const EventSchema = new mongoose.Schery: cconst EventSchema = new     title: String,
+  date: String,
+  time:ow  date: Stringjpg  time: Stringg'  location: St);  description: Strlt  attachment: String, }  isPast: { type: Bo
+a  createdAt: { typ secret: 'munipuri-secret-kcrequire('dotenv').config();
+const express = requrucons));
 
-// Write alumni file
-async function writeAlumni(alumni) {
-  const filePath = path.join(__dirname, 'data', 'alumni.json');
-  try {
-    await fs.mkdir(path.dirname(filePath), { recursive: true });
-    await fs.writeFile(filePath, JSON.stringify(alumni, null, 2), 'utf8');
-  } catch (err) {
-    console.error('Error writing alumni file', err);
-  }
-}
+// Setup EJS for renconst path atconst path = require('path')moconst session = require('experconst mongoose = require('mongoose');
+consseconst mul.uconsseconst multer = require('multer');
+cotrconst cloudinary = require(');
 
-// Read gallery file
-async function readGallery() {
-  const filePath = path.join(__dirname, 'data', 'gallery.json');
-  try {
-    const raw = await fs.readFile(filePath, 'utf8');
-    return JSON.parse(raw || '[]');
-  } catch (err) {
-    return [];
-  }
-}
+// Serve frontend assets
+app.use(excotrconst cc(path.join(__dirname, '../frconst app = express();
+const PORT = process.env.PORT || 3000;
 
-// Write gallery file
-async function writeGallery(gallery) {
-  const filePath = path.join(__dirname, 'data', 'gallery.json');
-  try {
-    await fs.mkdir(path.dirname(filePath), { recursive: true });
-    await fs.writeFile(filePath, JSON.stringify(gallery, null, 2), 'utf8');
-  } catch (err) {
-    console.error('Error writing gallery file', err);
-  }
-}
-
-// Authentication middleware
-function requireAdmin(req, res, next) {
+//ma)const PORT = pext) {
   if (req.session.isAdmin) {
     next();
   } else {
-    res.redirect('/admin/login');
-  }
-}
+    re// Connect to MongoDB
+if (p
+ if (process.en prif nt  api_secret: pro    .catch(err => console.error('MongoDB connection errorlo}
 
-app.post('/api/contact', async (req, res) => {
-  const entry = { ...req.body, receivedAt: new Date().toISOString() };
-  await appendToFile(path.join(__dirname, 'data', 'messages.json'), entry);
-  res.json({ ok: true, message: 'Contact message received' });
+// Define Mo n
+// Define Mongoose Models
+const EventSchema = new mongoose.Schery: cconstpasswconst EventSchema = new(us  date: String,
+  time:ow  date: Stringjpg  time: Stringg'  location: St);  descrip    time:ow  dat/aa  createdAt: { typ secret: 'munipuri-secret-kcrequire('dotenv').config();
+const express = requrucons)); }
 });
 
-app.post('/api/register', async (req, res) => {
-  const member = { ...req.body, registeredAt: new Date().toISOString() };
-  await appendToFile(path.join(__dirname, 'data', 'members.json'), member);
-  res.json({ ok: true, message: 'Registration received' });
-});
+app.get('/const express = requrucons));
 
-app.post('/api/newsletter', async (req, res) => {
-  const sub = { email: req.body.email, subscribedAt: new Date().toISOString() };
-  await appendToFile(path.join(__dirname, 'data', 'newsletter.json'), sub);
-  res.json({ ok: true, message: 'Subscribed to newsletter' });
-});
+// Setup EJS for renconst path atconst patad
+// Setup EJS for renconst pashconsseconst mul.uconsseconst multer = require('multer');
+cotrconst cloudinary = require(');
 
-// Admin Authentication Routes
-app.get('/admin/login', (req, res) => {
-  res.render('admin-login', { error: null });
-});
+// Serait Event.find().sort({ createdAcotrconst cloudinary = require(');
 
-app.post('/admin/login', (req, res) => {
-  const { username, password } = req.body;
-  if (username === 'admin' && password === 'admin123') {
-    req.session.isAdmin = true;
-    res.redirect('/admin/dashboard');
+// Serve frontend amn
+// Serve frontend assets
+app.useleaapp.use(excotrconst cc(llconst PORT = process.env.PORT || 3000;
+
+//ma)const PORT = pext) {
+  if s.
+//ma)const PORT = pext) {
+  if (req.lum  if (req.session.i
+  } ca    next();
   } else {
-    res.render('admin-login', { error: 'Invalid username or password' });
+    Da  } else {ne    re// orif (p
+ ifMongoDB variables a if et
+// Define Mo n
+// Define Mongoose Models
+const EventSchema = new mongoose.Schery: cconstpasswcons, as// Define Mon) const EventSchema = new ew  time:ow  date: Stringjpg  time: Stringg'  lle,
+      date: req.body.date,
+      time: req.boconst express = requrucons)); }
+});
+
+app.get('/const express = requrucons));
+
+// Setup EJS for renconst path atconst patad
+// Setup EJS for renconst pashconss  });
+
+app.get('/const express =
+    re
+// Setup EJS for renconst path atconsed // Setup EJS for renconst pashconsseconst msocotrconst cloudinary = require(');
+
+// Serait Event.find().sort({ createdAcotrconst cse
+// Serait Event.find().sort({ cr/ap
+// Serve frontend amn
+// Serve frontend assets
+app.useleaapp. await Event// Serve frontend aseqapp.useleaapp    res.json
+//ma)const PORT  } catch (err) {
+    res.status(500).json({ ok: false });
+  if s.
+//ma)const PORT n///ma)cll  if (req.lum  if (req.sad  } ca    next();
+  } else {
+  es  } else {
+    D      Da q.fi ifMongoDB variables a if et
+// D).// Define Mo n
+// Define Mo'Image is requireconst EventSchema = new ew      date: req.body.date,
+      time: req.boconst express = requrucons)); }
+});
+
+app.get('/const express = requrucons));
+
+// Setwait newImage.save();      time: req.boconst e m});
+
+app.get('/const express = requrucons));
+
+//} catch
+// Setup EJS for renconst path atconses.// Setup EJS for renconst pashconss  });
+
+aor
+app.get('/const express =
+    re
+// Seele    re
+// Setup EJS for id', requ
+// Serait Event.find().sort({ createdAcotrconst cse
+// Serait Event.find().sort({ cr/ap
+// Serve frontend amn
+// Serv;
+ // Serait Event.find().sort({ cr/ap
+// Se{ ok: false// Serve frontend amn
+// Servn/api/a// Serve frontend as, app.useleaapp. await Ev a//ma)const PORT  } catch (err) {
+    res.status(500).json({ ok: false })me    res.status(500).json({ ok: eq  if s.
+//ma)const PORT n///ma)cll  if .p//ma)cio  } else {
+  es  } else {
+    D      Da q.fi ifMongoDB variables a ipi  es  } een    D      Daen// D).// Define Mo n
+// Define Mo'Image is re  // Define Mo'Imagesav      time: req.boconst express = requrucons)); }
+});
+
+app.get('/const express = (});
+
+app.get('/const express = requrucons));
+
+//sage: 'Error saving alumni' });
   }
 });
 
-app.get('/admin/logout', (req, res) => {
-  req.session.destroy();
-  res.redirect('/admin/login');
-});
+app.del
+app.get('/const express = requrucons));
 
-// Admin Dashboard
-app.get('/admin/dashboard', requireAdmin, async (req, res) => {
-  const events = await readEvents();
-  const alumniList = await readAlumni();
-  const gallery = await readGallery();
-  res.render('admin-dashboard', { events, alumniList, gallery });
-});
-
-// Admin API
-app.post('/admin/api/events', requireAdmin, upload.single('attachment'), async (req, res) => {
-  const events = await readEvents();
-  const newEvent = {
-    id: Date.now(),
-    title: req.body.title,
-    date: req.body.date,
-    time: req.body.time,
-    location: req.body.location,
-    description: req.body.description,
-    attachment: req.file ? `/uploads/${req.file.filename}` : null,
-    isPast: false
-  };
-  events.push(newEvent);
-  await writeEvents(events);
-  res.json({ ok: true, message: 'Event added successfully' });
-});
-
-app.delete('/admin/api/events/:id', requireAdmin, async (req, res) => {
-  let events = await readEvents();
-  events = events.filter(e => e.id !== parseInt(req.params.id));
-  await writeEvents(events);
-  res.json({ ok: true });
-});
-
-app.post('/admin/api/gallery', requireAdmin, upload.single('image'), async (req, res) => {
-  if(!req.file) {
-    return res.status(400).json({ ok: false, message: 'Image is required' });
+//} catch
+// Ses)
+//} catch
+// Setup EJS for renconst pdAn// Setupre
+aor
+app.get('/const express =
+    re
+// Seele    re
+// Setup EJS for id', requ.jsap({    re
+// Seele    re
+////// Seer// Setup EJS p.// Serait Event.find().sos.// Serait Event.find().sort({ cr/ap
+// Serve frontab// Serve frontend amn
+// Serv;
+ //ou// Serv;
+ // Serait'/a // Ser))// Se{ ok: false// Serve frontend aes// Servn/api/a// Serve frontend as, ai    res.status(500).json({ ok: false })me    res.status(500).json({ ok: eq  if s.
+//ma)const !//ma)const PORT n///ma)cll  if .p//ma)cio  } else {
+  es  } else {
+    D      Da',  es  } else {
+    D      Da q.fi ifMongoDB variabca    D      Da  res.render('events', { upcoming: [], past: [], currentPath: '/events' });
   }
-  const gallery = await readGallery();
-  const newItem = {
-    id: Date.now(),
-    title: req.body.title || 'Untitled Image',
-    image: `/uploads/${req.file.filename}`
-  };
-  gallery.push(newItem);
-  await writeGallery(gallery);
-  res.json({ ok: true, message: 'Gallery item added successfully' });
 });
 
-app.delete('/admin/api/gallery/:id', requireAdmin, async (req, res) => {
-  let gallery = await readGallery();
-  gallery = gallery.filter(g => g.id !== parseInt(req.params.id));
-  await writeGallery(gallery);
-  res.json({ ok: true });
+app.get(});
+
+app.get('/const express = (});
+
+app.get('/const express = requrucons));
+
+//sage: 'Error saed
+a: -
+app.get('/const express = rende
+//sage: 'Error saving alumni' });
+  }/ga  }
 });
 
-app.post('/admin/api/alumni', requireAdmin, upload.single('image'), async (req, res) => {
-  const alumni = await readAlumni();
-  const newAlumni = {
-    id: Date.now(),
-    name: req.body.name,
-    batch: req.body.batch,
-    profession: req.body.profession,
-    image: req.file ? `/uploads/${req.file.filename}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(req.body.name)}&background=random`
-  };
-  alumni.push(newAlumni);
-  await writeAlumni(alumni);
-  res.json({ ok: true, message: 'Alumni added successfully' });
-});
+app.del
+app.get('/constre})re
+aer(app.gery
+//} catch
+// Ses)
+//} catch
+// Setup ry'// Ses)
 
-app.delete('/admin/api/alumni/:id', requireAdmin, async (req, res) => {
-  let alumni = await readAlumni();
-  alumni = alumni.filter(a => a.id !== parseInt(req.params.id));
-  await writeAlumni(alumni);
-  res.json({ ok: true });
-});
-
-// Render EJS Views
-app.get('/', (req, res) => res.render('index'));
-app.get('/about', (req, res) => res.render('about'));
-app.get('/events', async (req, res) => {
-  const events = await readEvents();
-  const upcoming = events.filter(e => !e.isPast);
-  const past = events.filter(e => e.isPast);
-  res.render('events', { upcoming, past });
-});
-app.get('/gallery', async (req, res) => {
-  const gallery = await readGallery();
-  res.render('gallery', { gallery });
-});
-app.get('/alumni', async (req, res) => {
-  const alumniList = await readAlumni();
-  res.render('alumni', { alumniList });
-});
-
-// Fallback / 404
-app.use((req, res) => {
-  res.status(404).send('Page not found');
-});
-
-// For Vercel Serverless Function compatibility, only listen if run directly
-if (require.main === module) {
+}//} cap.// Setupumaor
+app.get('/const express =
+    re
+//coapt     re
+// Seele    re
+//i.// Se).// Setup EJS dA// Seele    re
+////// Seer// Setup EJS'a////// Seer//mn// Serve frontab// Serve frontend amn
+// Serv;
+ //ou// Serv;
+ // Serait'/a // Ser))// St:// Serv;
+ //Path: '/alumni' });
+  }
+}) //ou//al // Serait'/ap//ma)const !//ma)const PORT n///ma)cll  if .p//ma)cio  } else {
+  es  } else ire.main === module) {
   app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 }
 
