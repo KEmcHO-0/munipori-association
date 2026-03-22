@@ -227,7 +227,7 @@ app.post('/admin/api/events', requireAdmin, upload.single('attachment'), async (
     await Event.create(newEvent);
     res.json({ ok: true, message: 'Event added successfully' });
   } catch (err) {
-    res.status(500).json({ ok: false, message: 'Error saving event' });
+    res.status(500).json({ ok: false, message: 'Error saving event: ' + err.message });
   }
 });
 
@@ -250,7 +250,7 @@ app.post('/admin/api/gallery', requireAdmin, upload.single('image'), async (req,
     await Gallery.create(newItem);
     res.json({ ok: true, message: 'Gallery item added successfully' });
   } catch (err) {
-    res.status(500).json({ ok: false, message: 'Error saving gallery image' });
+    res.status(500).json({ ok: false, message: 'Error saving gallery image: ' + err.message });
   }
 });
 
@@ -274,7 +274,7 @@ app.post('/admin/api/alumni', requireAdmin, upload.single('image'), async (req, 
     await Alumni.create(newAlumni);
     res.json({ ok: true, message: 'Alumni added successfully' });
   } catch (err) {
-    res.status(500).json({ ok: false, message: 'Error saving alumni' });
+    res.status(500).json({ ok: false, message: 'Error saving alumni: ' + err.message });
   }
 });
 
