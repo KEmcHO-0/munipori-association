@@ -22,14 +22,17 @@ async function connectToDatabase() {
   if (isConnected) return;
   if (!process.env.MONGO_URI) {
     console.error('MONGO_URI is missing from environment variables');
-    return;
+    throw new Error('MONGO_URI is missing');
   }
   try {
-    await mongoose.connect(process.env.MONGO_URI);
-    isConnected = true;
+    const db = await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 5000,
+    });
+    isConnected = db.connections[0].readyState === 1;
     console.log('Connected to MongoDB Atlas');
   } catch (err) {
     console.error('MongoDB connection error:', err);
+    throw err;
   }
 }
 
