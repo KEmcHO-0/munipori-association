@@ -322,6 +322,15 @@ app.get('/alumni', async (req, res) => {
   }
 });
 
+app.use((err, req, res, next) => {
+  console.error('Unhandled Error:', err);
+  if (req.originalUrl.includes('/api/')) {
+    res.status(500).json({ ok: false, message: err.message || 'Internal Server Error' });
+  } else {
+    res.status(500).send('Internal Server Error: ' + err.message);
+  }
+});
+
 // Fallback / 404
 app.use((req, res) => {
   res.status(404).send('Page not found');
